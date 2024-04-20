@@ -160,11 +160,16 @@ function handleLoadedTeapot(teapotData) {
 }
 
 function handleLoadedCsie(CsieData) {
+
+    var scaledVertexPositions = CsieData.vertexPositions.map(function(pos) {
+        return pos * 15;
+    });
+
     CsieVertexPositionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, CsieVertexPositionBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(CsieData.vertexPositions), gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(scaledVertexPositions), gl.STATIC_DRAW);
     CsieVertexPositionBuffer.itemSize = 3;
-    CsieVertexPositionBuffer.numItems = CsieData.vertexPositions.length / 3;
+    CsieVertexPositionBuffer.numItems = scaledVertexPositions.length / 3;
 
     CsieVertexNormalBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, CsieVertexNormalBuffer);
@@ -179,12 +184,18 @@ function handleLoadedCsie(CsieData) {
     CsieVertexFrontColorBuffer.numItems = CsieData.vertexFrontcolors.length / 3;
 }
 
+
 function handleLoadedPlant(PlantData) {
+
+    var scaledVertexPositions = PlantData.vertexPositions.map(function(pos) {
+        return pos * 15;
+    });
+
     PlantVertexPositionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, PlantVertexPositionBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(PlantData.vertexPositions), gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(scaledVertexPositions), gl.STATIC_DRAW);
     PlantVertexPositionBuffer.itemSize = 3;
-    PlantVertexPositionBuffer.numItems = PlantData.vertexPositions.length / 3;
+    PlantVertexPositionBuffer.numItems = scaledVertexPositions.length / 3;
 
     PlantVertexNormalBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, PlantVertexNormalBuffer);
@@ -198,6 +209,7 @@ function handleLoadedPlant(PlantData) {
     PlantVertexFrontColorBuffer.itemSize = 3;
     PlantVertexFrontColorBuffer.numItems = PlantData.vertexFrontcolors.length / 3;
 }
+
 
 
 function loadTeapot() {

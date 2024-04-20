@@ -62,8 +62,7 @@ basic implementation about shading
 
 * b10902112 (classmate) : 
 
-implementation about animation/model buffer/HTMLdisplay
+implementation about animation/model buffer/HTMLbasics
 
-* I want to extend special thanks to these authors for their contributions, which played a significant role in the implementation of this project. 
+* I want to extend special thanks to these authors for their contributions, which played a significant role in the project. 
 * Although my contribution might be limited, I have learned a great deal throughout this process. 
-* I am grateful for the support and assistance provided by professors, teaching assistants, and fellow classmates.

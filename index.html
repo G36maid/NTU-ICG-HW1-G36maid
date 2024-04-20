@@ -1,52 +1,52 @@
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Computer Graphics Assignment</title>
-        <style>
-            body {
-                background-color: #fff;
-            }
-            #container {
-                position: relative;
-                width: 100%;
-                height: 100%;
-            }
-            #canvasContainer {
-                position: absolute;
-                right: 2%;
-                top: 6%;
-            }
-            #settingsContainer {
-                position: absolute;
-                left: 1%;
-                top: 1%;
-                width: 30%;
-                min-width: 200px;
-            }
-            #settingsContainer p {
-                margin: 0;
-            }
-            #settingsContainer select,
-            #settingsContainer input[type="range"] {
-                width: 70%;
-                vertical-align: middle;
-            }
-            #settingsContainer table {
-                width: 100%;
-            }
-            #settingsContainer table td {
-                white-space: nowrap;
-            }
-            #movieModeContainer {
-                display: none;
-            }
-        </style>
-        <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
-        <link rel="stylesheet" href="styles.css">
-        <script type="text/javascript" src="./js/glMatrix-0.9.5.min.js"></script>
-        <script type="text/javascript" src="./js/webgl-utils.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer Graphics Assignment</title>
+    <style>
+        body {
+            background-color: #fff;
+        }
+        #container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        #canvasContainer {
+            position: absolute;
+            right: 2%;
+            top: 6%;
+        }
+        #settingsContainer {
+            position: absolute;
+            left: 1%;
+            top: 1%;
+            width: 30%;
+            min-width: 200px;
+        }
+        #settingsContainer p {
+            margin: 0;
+        }
+        #settingsContainer select,
+        #settingsContainer input[type="range"] {
+            width: 70%;
+            vertical-align: middle;
+        }
+        #settingsContainer table {
+            width: 100%;
+        }
+        #settingsContainer table td {
+            white-space: nowrap;
+        }
+        #movieModeContainer {
+            display: none;
+        }
+    </style>
+    <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+    <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="./js/glMatrix-0.9.5.min.js"></script>
+    <script type="text/javascript" src="./js/webgl-utils.js"></script>
 <!-- 
     TODO HERE: 
     modify fragment shader or write another one
@@ -76,8 +76,6 @@
             vec3 ambient_color = Ka * vec3(fragcolor);
 
             //diffuse conbine
-            //vec3 dx = dFdx(mvVertex);
-            //vec3 dy = dFdy(mvVertex);
             vec3 normal = normalize(cross(dFdx(mvVertex), dFdy(mvVertex))); 
 
             // specular  refactor
@@ -186,7 +184,7 @@
     void main(void) {
         if (shadingMethod_vertex==1){
             
-            //mvVertex = (uMVMatrix * vec4(aVertexPosition,1.0)).xyz;
+            mvVertex = (uMVMatrix * vec4(aVertexPosition,1.0)).xyz;
             
             gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
             fragcolor = vec4(aFrontColor.rgb, 1.0); 
@@ -195,12 +193,9 @@
             
             vec3 lightColor = vec3(1.0,0.8,0.5);
 
-            // Transform VertexPosition and VertexNormal to world coordinate system
             vec3 mvVertex = (uMVMatrix * vec4(aVertexPosition, 1.0)).xyz;
             
             //conbine
-            //mat3 normalMVMatrix = mat3(uMVMatrix);
-            //vec3 mvNormal = normalMVMatrix * aVertexNormal;
             vec3 mvNormal = mat3(uMVMatrix) * aVertexNormal;
             
             // V, N, L, H
@@ -218,25 +213,20 @@
             float kd = 0.6;
             float ks = 0.3;
 
-            vec3 gouraud = vec3(0.3,0.8,1.0);
+            vec3 gouraud = vec3(1.0,0.8,0.5);
             
             //conbine
             vec3 ambient = ka * lightColor;
-            //vec3 diffuse = max(dot(N, L), 0.0) * kd * lightColor;
-            //vec3 diffuse2 = max(dot(N, L2), 0.0) * kd * lightColor;
-            //vec3 diffuse3 = max(dot(N, L3), 0.0) * kd * lightColor;
+
             vec3 diffuseALL = (
                 max(dot(N, L), 0.0) +
                 max(dot(N, L2), 0.0) +
                 max(dot(N, L3), 0.0) ) * kd * lightColor;
 
-            //vec3 specular = pow(max(dot(N, H), 0.0), 32.0) * ks * lightColor;
-            //vec3 specular2 = pow(max(dot(N, H2), 0.0), 32.0) * ks * lightColor;
-            //vec3 specular3 = pow(max(dot(N, H3), 0.0), 32.0) * ks * lightColor;
             vec3 specularAll = (
-                pow(max(dot(N, H), 0.0), 32.0) +
-                pow(max(dot(N, H2), 0.0), 32.0) +
-                pow(max(dot(N, H3), 0.0), 32.0) ) ks * lightColor;
+                pow(max(dot(N, H), 0.0), 32.0) * ks * lightColor +
+                pow(max(dot(N, H2), 0.0), 32.0) * ks * lightColor +
+                pow(max(dot(N, H3), 0.0), 32.0) * ks * lightColor) ;
             gouraud = ambient + diffuseALL + specularAll;
 
             gouraud *= aFrontColor.rgb;
@@ -245,11 +235,7 @@
 
         }else{
 
-            // Transform the vertex position to world coordinates
-
-            //vPosition = (uMVMatrix * vec4(aVertexPosition, 1.0)).xyz;
-            
-            // Transform the normal to world coordinates
+            vPosition = (uMVMatrix * vec4(aVertexPosition, 1.0)).xyz;
 
             mat3 normalMatrix = mat3(uMVMatrix);
             vNormal = normalMatrix * aVertexNormal;
@@ -286,7 +272,7 @@
             <table>
             <tr>
             <td>
-            Spining(Rotating) Speed : <input type="range" id="rotationSpeedFactor" min="0.0" max="5"
+            Spining(Rotating) Speed : <input type="range" id="SpiningSpeed" min="0.0" max="5"
                 step="0.01" value="0.03" oninput="updateRotationSpeed()">
             </td>
             </tr>
@@ -294,7 +280,7 @@
             <br>
             <span>Targact Objects</span>
             <table>
-            <select id="objectSelect" onchange="display_screen(this.value)">
+            <select id="objectchoose" onchange="display_screen(this.value)">
             <option value="teapot">Teapot</option>
             <option value="Plant">Plant</option>
             <option value="Csie">Csie</option>
@@ -310,7 +296,7 @@
             </tr>
             <tr id="PlantTrans" style="display:none;">
             <td style="white-space: nowrap;">Trans:</td>
-            <td>X: <input id="transX2" type="range" autocomplete="off" value="0." max="50." min="-50."
+            <td>X: <input id="transX2" type="range" autocomplete="off" value="-20." max="50." min="-50."
                 oninput="update_trans('Plant')"></td>
             <td>Y: <input id="transY2" type="range" autocomplete="off" value="0." max="50." min="-50."
                 oninput="update_trans('Plant')"></td>
@@ -319,7 +305,7 @@
             </tr>
             <tr id="CsieTrans" style="display:none;">
             <td style="white-space: nowrap;">Trans:</td>
-            <td>X: <input id="transX3" type="range" autocomplete="off" value="0." max="50." min="-50."
+            <td>X: <input id="transX3" type="range" autocomplete="off" value="20." max="50." min="-50."
                 oninput="update_trans('Csie')"></td>
             <td>Y: <input id="transY3" type="range" autocomplete="off" value="0." max="50." min="-50."
                 oninput="update_trans('Csie')"></td>
