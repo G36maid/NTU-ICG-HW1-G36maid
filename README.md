@@ -40,18 +40,30 @@ not finish in hw1
 * 3 axis clipping
 * change light color and direction in realtime
 ## reference
-[https://webglfundamentals.org/webgl/lessons/zh_cn/](https://webglfundamentals.org/webgl/lessons/zh_cn/)
-[https://learnopengl.com/](https://learnopengl.com/)
-[https://www.csie.ntu.edu.tw/~ming/courses/icg/HW/DEMO2/](https://www.csie.ntu.edu.tw/~ming/courses/icg/HW/DEMO2/)
-[https://www.csie.ntu.edu.tw/~ming/courses/icg/HW/DEMO3/](https://www.csie.ntu.edu.tw/~ming/courses/icg/HW/DEMO3/)
-
-and the presentation slides in class
+Below are the main sources of reference:
+* [https://webglfundamentals.org/webgl/lessons/zh_cn/](https://webglfundamentals.org/webgl/lessons/zh_cn/)
+* [https://learnopengl.com/](https://learnopengl.com/)
+* [https://www.csie.ntu.edu.tw/~ming/courses/icg/HW/DEMO2/](https://www.csie.ntu.edu.tw/~ming/courses/icg/HW/DEMO2/)
+* [https://www.csie.ntu.edu.tw/~ming/courses/icg/HW/DEMO3/](https://www.csie.ntu.edu.tw/~ming/courses/icg/HW/DEMO3/)
+* and the presentation slides in class
 
 ## discuss with
-ChatGpt
 
-ming (ref)
+This code was inspired by and references the work of other authors. 
+Below are the main sources of reference:
+
+* ChatGpt
+
+* Demo in class (in ref) : 
+
+basic implementation about shading
 
 [ref](https://www.csie.ntu.edu.tw/~ming/courses/icg/HW/DEMO3/)
 
-b10902112 (classmate)
+* b10902112 (classmate) : 
+
+implementation about animation/model buffer/HTMLdisplay
+
+* I want to extend special thanks to these authors for their contributions, which played a significant role in the implementation of this project. 
+* Although my contribution might be limited, I have learned a great deal throughout this process. 
+* I am grateful for the support and assistance provided by professors, teaching assistants, and fellow classmates.
